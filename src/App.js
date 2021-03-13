@@ -16,25 +16,48 @@ class App extends React.Component {
     filter: "",
   };
 
+  addItemPhonebook = (data) => {
+    if (data.name === "" || data.number === "") {
+      alert("need name & number");
+      return;
+    }
+    const newItem = {
+      id: uuidv4(),
+      name: data.name,
+      number: data.number,
+    };
+
+    this.setState((prevState) => ({
+      contacts: [newItem, ...prevState.contacts],
+    }));
+  };
+
   deleteItemPhonebook = (itemId) => {
     this.setState((prevState) => ({
       contacts: prevState.contacts.filter((item) => item.id !== itemId),
     }));
   };
 
+  changeFilter = (e) => {
+    this.setState({ filter: e.currentTarget.value });
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { contacts, filter } = this.state;
+    const filteredPhonebook = contacts.filter((item) =>
+      item.name.toLowerCase().includes(filter.toLowerCase())
+    );
 
     return (
       <div className="App">
         <div className="Phonebook">
           <h1>Phonebook</h1>
-          <ContactForm />
+          <ContactForm onSubmit={this.addItemPhonebook} />
 
           <h2>Contacts</h2>
-          <Filter />
+          <Filter filter={filter} changeFilter={this.changeFilter} />
           <ContactList
-            contacts={contacts}
+            contacts={filteredPhonebook}
             deleteItemPhonebook={this.deleteItemPhonebook}
             handleSubmit={this.handleSubmit}
           />
