@@ -21,6 +21,18 @@ class App extends React.Component {
       alert("need name & number");
       return;
     }
+
+    let testIncludes = false;
+    this.state.contacts.forEach((item) => {
+      if (item.name === data.name) {
+        testIncludes = true;
+      }
+    });
+    if (testIncludes) {
+      alert(data.name + " is alredy in contacts");
+      return;
+    }
+
     const newItem = {
       id: uuidv4(),
       name: data.name,
@@ -59,7 +71,7 @@ class App extends React.Component {
           <ContactList
             contacts={filteredPhonebook}
             deleteItemPhonebook={this.deleteItemPhonebook}
-            handleSubmit={this.handleSubmit}
+            // handleSubmit={this.handleSubmit}
           />
         </div>
       </div>

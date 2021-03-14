@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ContactList = ({ contacts, deleteItemPhonebook }) => (
   <div className="Phonebook_block">
@@ -22,3 +23,14 @@ const ContactList = ({ contacts, deleteItemPhonebook }) => (
 );
 
 export default ContactList;
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      number: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+  deleteItemPhonebook: PropTypes.func.isRequired,
+};

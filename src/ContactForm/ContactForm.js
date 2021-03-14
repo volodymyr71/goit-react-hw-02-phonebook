@@ -1,13 +1,14 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 class ContactForm extends React.Component {
   state = { name: "", number: "" };
 
-  // const {name, number} = this.state
-
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
+
+    this.props.onSubmit(this.state);
+    this.reset();
   };
 
   handleChange = (event) => {
@@ -15,28 +16,36 @@ class ContactForm extends React.Component {
     this.setState({ [name]: value });
   };
 
+  reset = () => {
+    this.setState({ name: "", number: "" });
+  };
+
   render() {
     return (
       <div className="Phonebook_block">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name
+        <form className="Phonebook_form" onSubmit={this.handleSubmit}>
+          <p>Name</p>
+          <label id={uuidv4()}>
             <input
               value={this.state.name}
               onChange={this.handleChange}
               name="name"
+              id={uuidv4()}
               placeholder="Name"
             ></input>
           </label>
-          <label>
-            Number
+          <p>Number</p>
+
+          <label id={uuidv4()}>
             <input
               value={this.state.number}
               onChange={this.handleChange}
               name="number"
+              id={uuidv4()}
               placeholder="Number"
             ></input>
           </label>
+
           <button className="Phonebook_block_button" type="submit">
             Add contacts
           </button>
